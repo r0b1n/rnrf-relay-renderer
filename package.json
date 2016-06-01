@@ -1,0 +1,22 @@
+{
+  "name": "rnrf-relay-renderer",
+  "version": "0.1.0",
+  "description": "Helps to integrate relay to react-native-router-flux in react-native application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/r0b1n/rnrf-relay-renderer/"
+  },
+  "keywords": [
+    "react-native",
+    "relay",
+    "graphql",
+    "react-native-router",
+    "react-native-router-flux"
+  ],
+  "author": "Roman Vyakhirev <roman.vyakhirev@gmail.com>",
+  "license": "MIT"
+}
