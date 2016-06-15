@@ -15,13 +15,13 @@ export default class RelayComponentRenderer extends Component {
     renderError: PropTypes.func,
     navigationState: PropTypes.object,
   };
-  
+
   renderLoading() {
     return (<View>
       <Text>Loading...</Text>
     </View>);
   }
-  
+
   renderError(error, retry) {
     return (<View style={{padding: 30}}>
       <Text>Error while fetching data from the server</Text>
@@ -32,11 +32,18 @@ export default class RelayComponentRenderer extends Component {
   }
 
   render() {
+    // TODO: not sure if it is correct to pass all the data, find the way extract only needed variables
+    const params = {
+      ...this.props.navigationState,
+    };
+
+    delete params.environment;
+
     return (<Relay.Renderer
       Container={this.props.component}
       queryConfig={{
         queries: this.props.navigationState.queries,
-        params: this.props.navigationState, // TODO: not sure if it is correct to pass all the data, find the way extract only needed variables
+        params,
         name: `rnrf-relay-renderer_${this.props.navigationState.key}_route`, // construct route name based on navState key
       }}
       environment={this.props.navigationState.environment || this.props.environment || Relay.Store}
