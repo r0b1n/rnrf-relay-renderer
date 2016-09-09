@@ -8,7 +8,7 @@ import React, { Component, PropTypes } from 'react';
 
 import Relay from 'react-relay';
 
-export default class RelayComponentRenderer extends Component {
+export class RelayComponentRenderer extends Component {
   static propTypes = {
     component: PropTypes.func,
     renderLoading: PropTypes.func,
