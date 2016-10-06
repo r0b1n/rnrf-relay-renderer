@@ -47,7 +47,7 @@ export class RelayComponentRenderer extends Component {
 
         if (props) {
           // render component itself
-          return <this.props.component {...props} />;
+          return <this.props.component {...this.props} {...props} />;
         }
 
         // render loading
