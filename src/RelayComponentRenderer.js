@@ -8,20 +8,20 @@ import React, { Component, PropTypes } from 'react';
 
 import Relay from 'react-relay';
 
-export class RelayComponentRenderer extends Component {
+class RelayComponentRenderer extends Component {
   static propTypes = {
     component: PropTypes.func,
     renderLoading: PropTypes.func,
     renderError: PropTypes.func,
     navigationState: PropTypes.object,
   };
-  
+
   renderLoading() {
     return (<View>
       <Text>Loading...</Text>
     </View>);
   }
-  
+
   renderError(error, retry) {
     return (<View style={{padding: 30}}>
       <Text>Error while fetching data from the server</Text>
@@ -32,11 +32,18 @@ export class RelayComponentRenderer extends Component {
   }
 
   render() {
+    // TODO: not sure if it is correct to pass all the data, find the way extract only needed variables
+    const params = {
+      ...this.props.navigationState,
+    };
+
+    delete params.environment;
+
     return (<Relay.Renderer
       Container={this.props.component}
       queryConfig={{
         queries: this.props.navigationState.queries,
-        params: this.props.navigationState, // TODO: not sure if it is correct to pass all the data, find the way extract only needed variables
+        params,
         name: `rnrf_relay_renderer_${this.props.navigationState.key}_route`, // construct route name based on navState key
       }}
       environment={this.props.navigationState.environment || this.props.environment || Relay.Store}
