@@ -37,7 +37,7 @@ export class RelayComponentRenderer extends Component {
       queryConfig={{
         queries: this.props.navigationState.queries,
         params: this.props.navigationState, // TODO: not sure if it is correct to pass all the data, find the way extract only needed variables
-        name: `rnrf-relay-renderer_${this.props.navigationState.key}_route`, // construct route name based on navState key
+        name: `rnrf_relay_renderer_${this.props.navigationState.key}_route`, // construct route name based on navState key
       }}
       environment={this.props.navigationState.environment || this.props.environment || Relay.Store}
       render={({done, error, props, retry, stale}) => {
