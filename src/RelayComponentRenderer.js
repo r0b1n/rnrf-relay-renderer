@@ -4,11 +4,11 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 import Relay from 'react-relay';
 
-class RelayComponentRenderer extends Component {
+class RelayComponentRenderer extends React.Component {
   static propTypes = {
     component: PropTypes.func.isRequired,
     renderLoading: PropTypes.func,
@@ -42,7 +42,7 @@ class RelayComponentRenderer extends Component {
     delete params.environment;
 
     const {
-      component,
+      Component,
       navigationState,
       environment,
       getEnvironment,
@@ -51,7 +51,7 @@ class RelayComponentRenderer extends Component {
     } = this.props;
 
     return (<Relay.Renderer
-      Container={component}
+      Container={Component}
       queryConfig={{
         queries: navigationState.queries,
         params,
@@ -65,7 +65,7 @@ class RelayComponentRenderer extends Component {
 
         if (props) {
           // render component itself
-          return <component {...this.props} {...props} />;
+          return <Component {...this.props} {...props} />;
         }
 
         // render loading
@@ -84,5 +84,5 @@ export default (moduleProps) => (Component) =>
       <RelayComponentRenderer
         {...moduleProps}
         {...props}
-        component={Component}
+        Component={Component}
       />;
