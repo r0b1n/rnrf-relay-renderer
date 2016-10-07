@@ -4,16 +4,18 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 import Relay from 'react-relay';
 
-class RelayComponentRenderer extends Component {
+class RelayComponentRenderer extends React.Component {
   static propTypes = {
-    component: PropTypes.func,
+    component: PropTypes.func.isRequired,
     renderLoading: PropTypes.func,
     renderError: PropTypes.func,
-    navigationState: PropTypes.object,
+    navigationState: PropTypes.object.isRequired,
+    environment: PropTypes.object,
+    getEnvironment: PropTypes.func,
   };
 
   renderLoading() {
@@ -39,26 +41,35 @@ class RelayComponentRenderer extends Component {
 
     delete params.environment;
 
+    const {
+      Component,
+      navigationState,
+      environment,
+      getEnvironment,
+      renderError,
+      renderLoading,
+    } = this.props;
+
     return (<Relay.Renderer
-      Container={this.props.component}
+      Container={Component}
       queryConfig={{
-        queries: this.props.navigationState.queries,
+        queries: navigationState.queries,
         params,
-        name: `rnrf_relay_renderer_${this.props.navigationState.key}_route`, // construct route name based on navState key
+        name: `rnrf_relay_renderer_${navigationState.key}_route`, // construct route name based on navState key
       }}
-      environment={this.props.navigationState.environment || this.props.environment || Relay.Store}
+      environment={navigationState.environment || environment || (getEnvironment && getEnvironment()) || Relay.Store}
       render={({done, error, props, retry, stale}) => {
         if (error) {
-          return (this.props.renderError || this.renderError)(error, retry);
+          return (renderError || this.renderError)(error, retry);
         }
 
         if (props) {
           // render component itself
-          return <this.props.component {...this.props} {...props} />;
+          return <Component {...this.props} {...props} />;
         }
 
         // render loading
-        return (this.props.renderLoading || this.renderLoading)(this.props.navigationState)
+        return (renderLoading || this.renderLoading)(navigationState)
       }}
     />);
   }
@@ -73,5 +84,5 @@ export default (moduleProps) => (Component) =>
       <RelayComponentRenderer
         {...moduleProps}
         {...props}
-        component={Component}
+        Component={Component}
       />;
