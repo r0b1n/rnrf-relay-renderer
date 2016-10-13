@@ -33,13 +33,8 @@ import RelayRenderer from 'rnrf-relay-renderer'
     <Scene
       key="Country"
       component={CountryInfoScreen}
-      queries={{viewer: () => Relay.QL`query { viewer } `,}}
-    />
-    
-    <Scene
-      key="City"
-      component={CityInfoScreen}
-      queries={{viewer: () => Relay.QL`query { viewer } `,}}
+      queries={{country: () => Relay.QL`query { node(id: $gid) } `,}}
+      prepareParams={({id}) => relay.toGlobalId('Country', id)}
     />
   </Scene>
 </Router>

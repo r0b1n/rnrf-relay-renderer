@@ -31,19 +31,25 @@ class RelayComponentRenderer extends Component {
     </View>);
   }
 
-  render() {
+  getParams() {
     // TODO: not sure if it is correct to pass all the data, find the way extract only needed variables
     const params = {
       ...this.props.navigationState,
     };
 
     delete params.environment;
+    if (params.hasOwnProperty('prepareParams')) {
+      return params.prepareParams(params)
+    }
+    return params
+  }
 
+  render() {
     return (<Relay.Renderer
       Container={this.props.component}
       queryConfig={{
         queries: this.props.navigationState.queries,
-        params,
+        params: this.getParams(),
         name: `rnrf_relay_renderer_${this.props.navigationState.key}_route`, // construct route name based on navState key
       }}
       environment={this.props.navigationState.environment || this.props.environment || Relay.Store}
