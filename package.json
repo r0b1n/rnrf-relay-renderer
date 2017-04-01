@@ -1,6 +1,6 @@
 {
   "name": "rnrf-relay-renderer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Helps to integrate relay to react-native-router-flux in react-native application",
   "main": "index.js",
   "scripts": {
