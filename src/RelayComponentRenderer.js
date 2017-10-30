@@ -7,7 +7,7 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Relay from 'react-relay';
+import Relay from 'react-relay/classic';
 
 class RelayComponentRenderer extends Component {
   static propTypes = {
